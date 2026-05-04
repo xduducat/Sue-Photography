@@ -30,11 +30,14 @@
     .page { display: none; }
     .page.active { display: block; }
     .hero-wrap { padding: 2rem 2.5rem; }
-    .hero { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; background: var(--border); }
-    .hero-main { background: var(--bg-secondary); aspect-ratio: 3/4; position: relative; overflow: hidden; }
+    .hero-inner { display: grid; grid-template-columns: 5fr 3fr; gap: 12px; align-items: start; }
+
+    .hero-main { background: var(--bg-secondary); aspect-ratio: 4/5; position: relative; overflow: hidden; border-radius: 2px; }
     .hero-main img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .hero-side { background: var(--border); display: grid; grid-template-rows: 1fr 1fr; gap: 3px; }
-    .hero-sub { background: var(--bg-secondary); position: relative; overflow: hidden; }
+    .hero-side { display: grid; grid-template-rows: auto auto; gap: 12px; padding-top: 2rem; }
+    .hero-sub { background: var(--bg-secondary); position: relative; overflow: hidden; border-radius: 2px; }
+    .hero-sub:first-child { aspect-ratio: 4/3; }
+    .hero-sub:last-child { aspect-ratio: 1/1; }
     .hero-sub img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .photo-slot { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 10px; }
     .photo-slot-inner { display: flex; flex-direction: column; align-items: center; gap: 8px; }
@@ -98,8 +101,8 @@
       nav { padding: 1rem 1.25rem; }
       .nav-links { gap: 1.5rem; }
       .hero-wrap { padding: 1rem 1.25rem; }
-      .hero { grid-template-columns: 1fr; }
-      .hero-side { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-side { grid-template-columns: 1fr 1fr; grid-template-rows: auto; padding-top: 0; }
       .statement { grid-template-columns: 1fr; gap: 1rem; padding: 2rem 1.25rem; }
       .gallery-header { padding: 1.5rem 1.25rem 0.75rem; }
       .gallery-grid { padding: 0 1.25rem 2rem; grid-template-columns: repeat(2, 1fr); }
@@ -125,7 +128,7 @@
 
   <div id="page-home" class="page active">
     <div class="hero-wrap">
-      <div class="hero">
+      <div class="hero-inner">
         <div class="hero-main">
           <img src="photos/photos-image1.jpeg" alt="Brisbane 2025">
           <div class="photo-badge">Brisbane · 2025</div>
