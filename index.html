@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sue Wang Photography</title>
+  <meta name="description" content="Sue Wang — Street & Portrait Photographer based in Brisbane">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #ffffff;
+      --bg-secondary: #f5f5f3;
+      --text: #111111;
+      --text-secondary: #555550;
+      --text-tertiary: #999990;
+      --border: rgba(0,0,0,0.12);
+      --border-mid: rgba(0,0,0,0.22);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111111;
+        --bg-secondary: #1a1a1a;
+        --text: #f0f0ee;
+        --text-secondary: #aaaaaa;
+        --text-tertiary: #666666;
+        --border: rgba(255,255,255,0.1);
+        --border-mid: rgba(255,255,255,0.2);
+      }
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 13px;
+      letter-spacing: 0.01em;
+      min-height: 100vh;
+    }
+
+    /* ── Navigation ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 2.5rem;
+      background: var(--bg);
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .nav-logo {
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--text-tertiary); font-weight: 400; }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--text); }
+
+    /* ── Pages ── */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* ── Hero grid ── */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      margin: 0;
+    }
+
+    .hero-main {
+      background: var(--bg);
+      aspect-ratio: 3/4;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-side {
+      background: var(--border);
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+      gap: 1px;
+    }
+
+    .hero-sub {
+      background: var(--bg-secondary);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Photo placeholders — replace with <img> tags */
+    .photo-slot {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .photo-slot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .photo-slot-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .photo-slot-inner svg {
+      width: 28px;
+      height: 28px;
+      opacity: 0.15;
+      stroke: var(--text);
+    }
+
+    .photo-slot-inner span {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+    }
+
+    .photo-badge {
+      position: absolute;
+      bottom: 14px;
+      left: 14px;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      background: var(--bg);
+      padding: 4px 8px;
+      border: 0.5px solid var(--border);
+    }
+
+    /* ── Statement ── */
+    .statement {
+      padding: 2.5rem 2.5rem;
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 3rem;
+      border-bottom: 0.5px solid var(--border);
+      align-items: start;
+    }
+
+    .statement-label {
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      padding-top: 4px;
+    }
+
+    .statement-text {
+      font-size: 15px;
+      line-height: 1.85;
+      color: var(--text-secondary);
+    }
+
+    .statement-text strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* ── Gallery ── */
+    .gallery-header {
+      padding: 2rem 2.5rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .gallery-title {
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+    }
+
+    .gallery-filters {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .filter-btn {
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      font-family: inherit;
+      transition: color 0.2s;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active { color: var(--text); }
+
+    .gallery-grid {
+      padding: 0 2.5rem 3rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+    }
+
+    .gallery-item {
+      background: var(--bg-secondary);
+      aspect-ratio: 1;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .gallery-item:hover img { transform: scale(1.03); }
+
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+
+    .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      opacity: 0;
+      transition: opacity 0.25s;
+      display: flex;
+      align-items: flex-end;
+      padding: 14px;
+    }
+
+    .gallery-meta {
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+    }
+
+    /* ── About page ── */
+    .about-wrap {
+      padding: 3rem 2.5rem;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .about-portrait {
+      position: relative;
+    }
+
+    .about-portrait-img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: var(--bg-secondary);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .about-portrait-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .about-portrait-caption {
+      margin-top: 12px;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+    }
+
+    .about-name {
+      font-size: 30px;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+
+    .about-subtitle {
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin-bottom: 2rem;
+    }
+
+    .about-bio {
+      font-size: 14px;
+      line-height: 1.95;
+      color: var(--text-secondary);
+      margin-bottom: 2.5rem;
+    }
+
+    .about-stats {
+      display: flex;
+      gap: 3rem;
+      border-top: 0.5px solid var(--border);
+      padding-top: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .stat-label {
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin-bottom: 5px;
+    }
+
+    .stat-value {
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .about-equipment {
+      border-top: 0.5px solid var(--border);
+      padding-top: 1.5rem;
+    }
+
+    .equipment-label {
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin-bottom: 1rem;
+    }
+
+    .equipment-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .equipment-tag {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: var(--text-secondary);
+      border: 0.5px solid var(--border-mid);
+      padding: 4px 10px;
+    }
+
+    /* ── Contact page ── */
+    .contact-wrap {
+      padding: 3rem 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: start;
+    }
+
+    .contact-info-label {
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-title {
+      font-size: 26px;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      margin-bottom: 1rem;
+      line-height: 1.3;
+    }
+
+    .contact-desc {
+      font-size: 13px;
+      line-height: 1.8;
+      color: var(--text-secondary);
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-details {
+      border-top: 0.5px solid var(--border);
+      padding-top: 1.5rem;
+    }
+
+    .contact-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 0.5px solid var(--border);
+      font-size: 12px;
+    }
+
+    .contact-row-label {
+      color: var(--text-tertiary);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-size: 10px;
+    }
+
+    .contact-row-value {
+      color: var(--text-secondary);
+    }
+
+    /* Form */
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin-bottom: 7px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 13px;
+      font-family: inherit;
+      background: var(--bg);
+      border: 0.5px solid var(--border-mid);
+      color: var(--text);
+      border-radius: 0;
+      outline: none;
+      transition: border-color 0.2s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .form-input:focus { border-color: var(--text); }
+
+    textarea.form-input {
+      resize: vertical;
+      min-height: 110px;
+      line-height: 1.6;
+    }
+
+    select.form-input { cursor: pointer; }
+
+    .form-submit {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 28px;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-family: inherit;
+      background: var(--text);
+      color: var(--bg);
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      margin-top: 0.5rem;
+    }
+
+    .form-submit:hover { opacity: 0.75; }
+
+    /* Toast */
+    .toast {
+      display: none;
+      margin-top: 1rem;
+      padding: 10px 14px;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      color: var(--text-secondary);
+      border: 0.5px solid var(--border);
+      background: var(--bg-secondary);
+    }
+
+    /* ── Footer ── */
+    footer {
+      padding: 1.5rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 0.5px solid var(--border);
+    }
+
+    .footer-copy {
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      color: var(--text-tertiary);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .footer-links a {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--text); }
+
+    /* ── Responsive ── */
+    @media (max-width: 680px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-links { gap: 1.5rem; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-side { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .statement { grid-template-columns: 1fr; gap: 1rem; padding: 2rem 1.25rem; }
+      .gallery-header { padding: 1.5rem 1.25rem 0.75rem; }
+      .gallery-grid { padding: 0 1.25rem 2rem; grid-template-columns: repeat(2, 1fr); }
+      .about-wrap { grid-template-columns: 1fr; gap: 2rem; padding: 2rem 1.25rem; }
+      .about-portrait-img { aspect-ratio: 4/3; }
+      .contact-wrap { grid-template-columns: 1fr; gap: 2rem; padding: 2rem 1.25rem; }
+      .form-row { grid-template-columns: 1fr; }
+      .about-stats { gap: 1.5rem; flex-wrap: wrap; }
+      footer { padding: 1.25rem; flex-direction: column; gap: 1rem; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#" class="nav-logo" onclick="showPage('home');return false;">Sue Wang <span>Photography</span></a>
+    <ul class="nav-links">
+      <li><a href="#" class="active" onclick="showPage('home');return false;" id="nav-home">Work</a></li>
+      <li><a href="#" onclick="showPage('about');return false;" id="nav-about">About</a></li>
+      <li><a href="#" onclick="showPage('contact');return false;" id="nav-contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ══ HOME ══ -->
+  <div id="page-home" class="page active">
+
+    <div class="hero">
+      <div class="hero-main">
+        <!-- 替换为真实图片: <img src="photos/hero-main.jpg" alt="Tokyo 2024"> -->
+        <div class="photo-slot">
+          <div class="photo-slot-inner">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1"><rect x="3" y="5" width="18" height="14" rx="1"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="7.5" r="1"/></svg>
+            <span>主图 · 上传你的照片</span>
+          </div>
+        </div>
+        <div class="photo-badge">Tokyo · 2024</div>
+      </div>
+      <div class="hero-side">
+        <div class="hero-sub">
+          <!-- 替换为真实图片 -->
+          <div class="photo-slot" style="height:100%">
+            <div class="photo-slot-inner">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1"><rect x="3" y="5" width="18" height="14" rx="1"/><circle cx="12" cy="12" r="4"/></svg>
+            </div>
+          </div>
+          <div class="photo-badge">Paris · 2024</div>
+        </div>
+        <div class="hero-sub">
+          <div class="photo-slot" style="height:100%">
+            <div class="photo-slot-inner">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1"><rect x="3" y="5" width="18" height="14" rx="1"/><circle cx="12" cy="12" r="4"/></svg>
+            </div>
+          </div>
+          <div class="photo-badge">Shanghai · 2023</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="statement">
+      <div class="statement-label">Statement</div>
+      <div class="statement-text">
+        <strong>人在街道上，才是最真实的自己。</strong><br>
+        我用镜头记录城市中稍纵即逝的瞬间——光与影的对话，陌生人与陌生人之间那一瞬的共鸣。
+      </div>
+    </div>
+
+    <div class="gallery-header">
+      <div class="gallery-title">Selected works</div>
+      <div class="gallery-filters">
+        <button class="filter-btn active" onclick="filterGallery(this,'all')">All</button>
+        <button class="filter-btn" onclick="filterGallery(this,'portrait')">Portrait</button>
+        <button class="filter-btn" onclick="filterGallery(this,'street')">Street</button>
+      </div>
+    </div>
+
+    <div class="gallery-grid">
+      <!--
+        替换每个 gallery-item 里的占位符为真实图片:
+        <img src="photos/gallery-1.jpg" alt="Tokyo 2024">
+        data-type 用于筛选: "portrait" 或 "street"
+      -->
+      <div class="gallery-item" data-type="portrait">
+        <div class="photo-slot"><div class="photo-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke-width="1"><rect x="3" y="5" width="18" height="14" rx="1"/><circle cx="12" cy="12" r="4"/></svg></div></div>
+        <div class="gallery-overlay"><div class="gallery-meta">Tokyo · 2024</div></div>
+      </div>
+      <div class="gallery-item" data-type="street">
+        <div class="photo-slot"><div class="photo-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke-width="1"><rect x="3" y="5" width="18" height="14" rx="1"/><circle cx="12" cy="12" r="4"/></svg></div></div>
+        <div class="gallery-overlay"><div class="gallery-meta">Paris · 2024</div></div>
+      </div>
+      <div class="gallery-item" data-type="portrait">
+        <div class="photo-slot"><div class="photo-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke-width="1"><rect x="3" y="5" width="18" height="14" rx="1"/><circle cx="12" cy="12" r="4"/></svg></div></div>
+        <div class="gallery-overlay"><div class="gallery-meta">Shanghai · 2023</div></div>
+      </div>
+      <div class="gallery-item" data-type="street">
+        <div class="photo-slot"><div class="photo-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke-width="1"><rect x="3" y="5" width="18" height="14" rx="1"/><circle cx="12" cy="12" r="4"/></svg></div></div>
+        <div class="gallery-overlay"><div class="gallery-meta">Hong Kong · 2023</div></div>
+      </div>
+      <div class="gallery-item" data-type="portrait">
+        <div class="photo-slot"><div class="photo-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke-width="1"><rect x="3" y="5" width="18" height="14" rx="1"/><circle cx="12" cy="12" r="4"/></svg></div></div>
+        <div class="gallery-overlay"><div class="gallery-meta">Seoul · 2024</div></div>
+      </div>
+      <div class="gallery-item" data-type="street">
+        <div class="photo-slot"><div class="photo-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke-width="1"><rect x="3" y="5" width="18" height="14" rx="1"/><circle cx="12" cy="12" r="4"/></svg></div></div>
+        <div class="gallery-overlay"><div class="gallery-meta">Kyoto · 2022</div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══ ABOUT ══ -->
+  <div id="page-about" class="page">
+    <div class="about-wrap">
+      <div class="about-portrait">
+        <div class="about-portrait-img">
+          <!-- 替换为摄影师照片: <img src="photos/portrait.jpg" alt="Sue Wang"> -->
+          <div class="photo-slot-inner">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1" style="width:36px;height:36px;opacity:0.15;stroke:currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          </div>
+        </div>
+        <div class="about-portrait-caption">Sue Wang · 摄影师</div>
+      </div>
+      <div class="about-content">
+        <div class="about-name">Sue Wang</div>
+        <div class="about-subtitle">Street &amp; Portrait Photographer · 上海 / 东京</div>
+        <div class="about-bio">
+          十年来，我带着一台徕卡穿行于亚洲各地的街道。我相信摄影是一种倾听——倾听城市的呼吸，倾听人与人之间无声的语言。<br><br>
+          城市里每一个人都带着自己的故事行走，而街头摄影就是在那些无意识的瞬间，捕捉到他们与世界相遇时最真实的状态。不加修饰，不加表演。<br><br>
+          我的作品曾在上海、东京、巴黎展出，并收录于多部摄影出版物中。商业合作、作品授权及展览事宜欢迎联系。
+        </div>
+        <div class="about-stats">
+          <div>
+            <div class="stat-label">Years</div>
+            <div class="stat-value">10+</div>
+          </div>
+          <div>
+            <div class="stat-label">Cities</div>
+            <div class="stat-value">24</div>
+          </div>
+          <div>
+            <div class="stat-label">Exhibitions</div>
+            <div class="stat-value">8</div>
+          </div>
+          <div>
+            <div class="stat-label">Camera</div>
+            <div class="stat-value">M11</div>
+          </div>
+        </div>
+        <div class="about-equipment">
+          <div class="equipment-label">Equipment</div>
+          <div class="equipment-list">
+            <span class="equipment-tag">Leica M11</span>
+            <span class="equipment-tag">Summicron 35mm f/2</span>
+            <span class="equipment-tag">Summilux 50mm f/1.4</span>
+            <span class="equipment-tag">HP5+ Film</span>
+            <span class="equipment-tag">Kodak Tri-X 400</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ CONTACT ══ -->
+  <div id="page-contact" class="page">
+    <div class="contact-wrap">
+      <div class="contact-info">
+        <div class="contact-info-label">Get in touch</div>
+        <div class="contact-title">合作<br>&amp; 预约</div>
+        <div class="contact-desc">商业委托、展览合作或作品授权，请留下您的信息，我将在两个工作日内回复。</div>
+        <div class="contact-details">
+          <div class="contact-row">
+            <span class="contact-row-label">Email</span>
+            <span class="contact-row-value">hello@linwei.photo</span>
+          </div>
+          <div class="contact-row">
+            <span class="contact-row-label">Based in</span>
+            <span class="contact-row-value">Shanghai / Tokyo</span>
+          </div>
+          <div class="contact-row">
+            <span class="contact-row-label">Available</span>
+            <span class="contact-row-value">Worldwide</span>
+          </div>
+          <div class="contact-row">
+            <span class="contact-row-label">Response</span>
+            <span class="contact-row-value">Within 48 hours</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="f-name">姓名</label>
+            <input class="form-input" id="f-name" type="text" placeholder="您的姓名">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="f-email">邮箱</label>
+            <input class="form-input" id="f-email" type="email" placeholder="your@email.com">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="f-type">合作类型</label>
+          <select class="form-input" id="f-type">
+            <option value="">请选择...</option>
+            <option>商业摄影委托</option>
+            <option>展览合作</option>
+            <option>作品授权</option>
+            <option>个人写真预约</option>
+            <option>其他咨询</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="f-msg">留言</label>
+          <textarea class="form-input" id="f-msg" placeholder="请描述您的项目或需求..."></textarea>
+        </div>
+        <button class="form-submit" onclick="submitForm()">发送 →</button>
+        <div class="toast" id="toast">✓ 已收到，感谢您的留言，我将尽快回复。</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-copy">© 2025 Sue Wang Photography</div>
+    <div class="footer-links">
+      <a href="https://instagram.com" target="_blank">Instagram</a>
+      <a href="https://vsco.co" target="_blank">VSCO</a>
+    </div>
+  </footer>
+
+  <script>
+    function showPage(name) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page-' + name).classList.add('active');
+      ['home','about','contact'].forEach(n => {
+        document.getElementById('nav-' + n).classList.toggle('active', n === name);
+      });
+      window.scrollTo(0, 0);
+    }
+
+    function filterGallery(btn, type) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.gallery-item').forEach(item => {
+        item.style.display = (type === 'all' || item.dataset.type === type) ? '' : 'none';
+      });
+    }
+
+    function submitForm() {
+      const name = document.getElementById('f-name').value.trim();
+      const email = document.getElementById('f-email').value.trim();
+      if (!name || !email) { alert('请填写姓名和邮箱'); return; }
+      const toast = document.getElementById('toast');
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.display = 'none'; }, 4000);
+      document.getElementById('f-name').value = '';
+      document.getElementById('f-email').value = '';
+      document.getElementById('f-type').value = '';
+      document.getElementById('f-msg').value = '';
+    }
+  </script>
+
+</body>
+</html>
