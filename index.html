@@ -41,7 +41,6 @@
       min-height: 100vh;
     }
 
-    /* ── Navigation ── */
     nav {
       position: sticky;
       top: 0;
@@ -83,11 +82,9 @@
     .nav-links a:hover,
     .nav-links a.active { color: var(--text); }
 
-    /* ── Pages ── */
     .page { display: none; }
     .page.active { display: block; }
 
-    /* ── Hero grid ── */
     .hero {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -103,6 +100,13 @@
       overflow: hidden;
     }
 
+    .hero-main img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
     .hero-side {
       background: var(--border);
       display: grid;
@@ -116,7 +120,13 @@
       overflow: hidden;
     }
 
-    /* Photo placeholders — replace with <img> tags */
+    .hero-sub img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
     .photo-slot {
       width: 100%;
       height: 100%;
@@ -125,13 +135,6 @@
       justify-content: center;
       flex-direction: column;
       gap: 10px;
-    }
-
-    .photo-slot img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
     }
 
     .photo-slot-inner {
@@ -168,7 +171,6 @@
       border: 0.5px solid var(--border);
     }
 
-    /* ── Statement ── */
     .statement {
       padding: 2.5rem 2.5rem;
       display: grid;
@@ -197,7 +199,6 @@
       font-weight: 500;
     }
 
-    /* ── Gallery ── */
     .gallery-header {
       padding: 2rem 2.5rem 1rem;
       display: flex;
@@ -258,7 +259,6 @@
     }
 
     .gallery-item:hover img { transform: scale(1.03); }
-
     .gallery-item:hover .gallery-overlay { opacity: 1; }
 
     .gallery-overlay {
@@ -279,17 +279,12 @@
       color: rgba(255,255,255,0.8);
     }
 
-    /* ── About page ── */
     .about-wrap {
       padding: 3rem 2.5rem;
       display: grid;
       grid-template-columns: 260px 1fr;
       gap: 5rem;
       align-items: start;
-    }
-
-    .about-portrait {
-      position: relative;
     }
 
     .about-portrait-img {
@@ -388,7 +383,6 @@
       padding: 4px 10px;
     }
 
-    /* ── Contact page ── */
     .contact-wrap {
       padding: 3rem 2.5rem;
       display: grid;
@@ -420,10 +414,7 @@
       margin-bottom: 2.5rem;
     }
 
-    .contact-details {
-      border-top: 0.5px solid var(--border);
-      padding-top: 1.5rem;
-    }
+    .contact-details { border-top: 0.5px solid var(--border); padding-top: 1.5rem; }
 
     .contact-row {
       display: flex;
@@ -440,14 +431,9 @@
       font-size: 10px;
     }
 
-    .contact-row-value {
-      color: var(--text-secondary);
-    }
+    .contact-row-value { color: var(--text-secondary); }
 
-    /* Form */
-    .form-group {
-      margin-bottom: 1.25rem;
-    }
+    .form-group { margin-bottom: 1.25rem; }
 
     .form-row {
       display: grid;
@@ -480,13 +466,7 @@
     }
 
     .form-input:focus { border-color: var(--text); }
-
-    textarea.form-input {
-      resize: vertical;
-      min-height: 110px;
-      line-height: 1.6;
-    }
-
+    textarea.form-input { resize: vertical; min-height: 110px; line-height: 1.6; }
     select.form-input { cursor: pointer; }
 
     .form-submit {
@@ -508,7 +488,6 @@
 
     .form-submit:hover { opacity: 0.75; }
 
-    /* Toast */
     .toast {
       display: none;
       margin-top: 1rem;
@@ -520,7 +499,6 @@
       background: var(--bg-secondary);
     }
 
-    /* ── Footer ── */
     footer {
       padding: 1.5rem 2.5rem;
       display: flex;
@@ -529,16 +507,9 @@
       border-top: 0.5px solid var(--border);
     }
 
-    .footer-copy {
-      font-size: 11px;
-      letter-spacing: 0.06em;
-      color: var(--text-tertiary);
-    }
+    .footer-copy { font-size: 11px; letter-spacing: 0.06em; color: var(--text-tertiary); }
 
-    .footer-links {
-      display: flex;
-      gap: 2rem;
-    }
+    .footer-links { display: flex; gap: 2rem; }
 
     .footer-links a {
       font-size: 10px;
@@ -551,7 +522,6 @@
 
     .footer-links a:hover { color: var(--text); }
 
-    /* ── Responsive ── */
     @media (max-width: 680px) {
       nav { padding: 1rem 1.25rem; }
       .nav-links { gap: 1.5rem; }
@@ -585,32 +555,22 @@
 
     <div class="hero">
       <div class="hero-main">
-        <!-- 替换为真实图片: <img src="photos/photos-image1.jpeg" alt="Brisbane 2025"> -->
-        <div class="photo-slot">
-          <div class="photo-slot-inner">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="1"><rect x="3" y="5" width="18" height="14" rx="1"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="7.5" r="1"/></svg>
-            <span>主图 · 上传你的照片</span>
-          </div>
-        </div>
-        <div class="photo-badge">Tokyo · 2024</div>
+        <img src="photos/photos-image1.jpg" alt="Brisbane 2025">
+        <div class="photo-badge">Brisbane · 2025</div>
       </div>
       <div class="hero-side">
         <div class="hero-sub">
-          <!-- 替换为真实图片 -->
-          <div class="photo-slot" style="height:100%">
-            <div class="photo-slot-inner">
-              <svg viewBox="0 0 24 24" fill="none" stroke-width="1"><rect x="3" y="5" width="18" height="14" rx="1"/><circle cx="12" cy="12" r="4"/></svg>
-            </div>
-          </div>
-          <div class="photo-badge">Paris · 2024</div>
+          <img src="photos/photos-image2.jpg" alt="Brisbane 2025">
+          <div class="photo-badge">Brisbane · 2025</div>
         </div>
         <div class="hero-sub">
+          <!-- 上传更多照片后替换这里 -->
           <div class="photo-slot" style="height:100%">
             <div class="photo-slot-inner">
               <svg viewBox="0 0 24 24" fill="none" stroke-width="1"><rect x="3" y="5" width="18" height="14" rx="1"/><circle cx="12" cy="12" r="4"/></svg>
+              <span>更多照片</span>
             </div>
           </div>
-          <div class="photo-badge">Shanghai · 2023</div>
         </div>
       </div>
     </div>
@@ -633,34 +593,30 @@
     </div>
 
     <div class="gallery-grid">
-      <!--
-        替换每个 gallery-item 里的占位符为真实图片:
-        <img src="photos/photos-image2.jpg" alt="Pepper 2025">
-        data-type 用于筛选: "portrait" 或 "street"
-      -->
+      <div class="gallery-item" data-type="portrait">
+        <img src="photos/photos-image1.jpg" alt="Brisbane 2025">
+        <div class="gallery-overlay"><div class="gallery-meta">Brisbane · 2025</div></div>
+      </div>
+      <div class="gallery-item" data-type="street">
+        <img src="photos/photos-image2.jpg" alt="Brisbane 2025">
+        <div class="gallery-overlay"><div class="gallery-meta">Brisbane · 2025</div></div>
+      </div>
+      <!-- 以下格子等有更多照片后替换 -->
       <div class="gallery-item" data-type="portrait">
         <div class="photo-slot"><div class="photo-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke-width="1"><rect x="3" y="5" width="18" height="14" rx="1"/><circle cx="12" cy="12" r="4"/></svg></div></div>
-        <div class="gallery-overlay"><div class="gallery-meta">Tokyo · 2024</div></div>
+        <div class="gallery-overlay"><div class="gallery-meta">Coming soon</div></div>
       </div>
       <div class="gallery-item" data-type="street">
         <div class="photo-slot"><div class="photo-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke-width="1"><rect x="3" y="5" width="18" height="14" rx="1"/><circle cx="12" cy="12" r="4"/></svg></div></div>
-        <div class="gallery-overlay"><div class="gallery-meta">Paris · 2024</div></div>
+        <div class="gallery-overlay"><div class="gallery-meta">Coming soon</div></div>
       </div>
       <div class="gallery-item" data-type="portrait">
         <div class="photo-slot"><div class="photo-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke-width="1"><rect x="3" y="5" width="18" height="14" rx="1"/><circle cx="12" cy="12" r="4"/></svg></div></div>
-        <div class="gallery-overlay"><div class="gallery-meta">Shanghai · 2023</div></div>
+        <div class="gallery-overlay"><div class="gallery-meta">Coming soon</div></div>
       </div>
       <div class="gallery-item" data-type="street">
         <div class="photo-slot"><div class="photo-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke-width="1"><rect x="3" y="5" width="18" height="14" rx="1"/><circle cx="12" cy="12" r="4"/></svg></div></div>
-        <div class="gallery-overlay"><div class="gallery-meta">Hong Kong · 2023</div></div>
-      </div>
-      <div class="gallery-item" data-type="portrait">
-        <div class="photo-slot"><div class="photo-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke-width="1"><rect x="3" y="5" width="18" height="14" rx="1"/><circle cx="12" cy="12" r="4"/></svg></div></div>
-        <div class="gallery-overlay"><div class="gallery-meta">Seoul · 2024</div></div>
-      </div>
-      <div class="gallery-item" data-type="street">
-        <div class="photo-slot"><div class="photo-slot-inner"><svg viewBox="0 0 24 24" fill="none" stroke-width="1"><rect x="3" y="5" width="18" height="14" rx="1"/><circle cx="12" cy="12" r="4"/></svg></div></div>
-        <div class="gallery-overlay"><div class="gallery-meta">Kyoto · 2022</div></div>
+        <div class="gallery-overlay"><div class="gallery-meta">Coming soon</div></div>
       </div>
     </div>
 
@@ -671,16 +627,13 @@
     <div class="about-wrap">
       <div class="about-portrait">
         <div class="about-portrait-img">
-          <!-- 替换为摄影师照片: <img src="photos/portrait.jpg" alt="Sue Wang"> -->
-          <div class="photo-slot-inner">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="1" style="width:36px;height:36px;opacity:0.15;stroke:currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-          </div>
+          <img src="photos/photos-image1.jpg" alt="Sue Wang">
         </div>
         <div class="about-portrait-caption">Sue Wang · 摄影师</div>
       </div>
       <div class="about-content">
         <div class="about-name">Sue Wang</div>
-        <div class="about-subtitle">Street &amp; Portrait Photographer · 上海 / 东京</div>
+        <div class="about-subtitle">Street &amp; Portrait Photographer · Brisbane</div>
         <div class="about-bio">
           我相信摄影是一种倾听——倾听城市的呼吸，倾听人与人之间无声的语言。<br><br>
           城市里每一个人都带着自己的故事行走，而街头摄影就是在那些无意识的瞬间，捕捉到他们与世界相遇时最真实的状态。不加修饰，不加表演。<br><br>
